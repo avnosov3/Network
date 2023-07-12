@@ -6,7 +6,7 @@ from ..core.db import Base
 
 
 class Post(Base):
-    text = Column(Text, nullable=True)
+    text = Column(Text, nullable=False)
     # author
     pub_date = Column(DateTime, default=datetime.utcnow)
 
