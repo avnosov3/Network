@@ -29,6 +29,14 @@ async def get_all_posts(session: AsyncSession = Depends(get_async_session)):
     return posts
 
 
+@post_router.get('/{post_id}')
+async def get_post(
+    post_id: int,
+    session: AsyncSession = Depends(get_async_session)
+):
+    return await check_post_exists_by_id(post_id, session)
+
+
 @post_router.patch('/{post_id}')
 async def update_post(
     post_id: int,
