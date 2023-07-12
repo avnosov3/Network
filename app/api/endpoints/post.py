@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
 from app.crud.post import post_crud
-from app.schemas.post import PostCreate
+from app.schemas.post import PostCreate, PostUpdate
+from ..validators import check_post_exists_by_id
 
 post_router = APIRouter()
 
@@ -26,3 +27,13 @@ async def get_all_posts(session: AsyncSession = Depends(get_async_session)):
             detail=POSTS_NOT_FOUND
         )
     return posts
+
+
+@post_router.patch('/{post_id}')
+async def update_post(
+    post_id: int,
+    post: PostUpdate,
+    session: AsyncSession = Depends(get_async_session)
+):
+    post_db = await check_post_exists_by_id(post_id, session)
+    return await post_crud.update(post_db, post, session)
