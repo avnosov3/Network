@@ -2,6 +2,8 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ..models.user import User
+
 
 class CRUDBase:
 
@@ -31,8 +33,10 @@ class CRUDBase:
         self,
         obj_in,
         session: AsyncSession,
+        user: User
     ):
         obj_in_data = obj_in.dict()
+        obj_in_data['user_id'] = user.id
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
         await session.commit()

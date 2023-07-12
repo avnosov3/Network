@@ -15,4 +15,7 @@ class Post(Base):
     OUT = ('текст поста {text:.15} дата публикации {pub_date}')
 
     def __repr__(self):
-        return self.OUT.format(self.text, self.pub_date)
+        return self.OUT.format(
+            text=self.text,
+            pub_date=self.pub_date
+        )

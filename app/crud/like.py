@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .crud_base import CRUDBase
@@ -32,6 +32,24 @@ class CRUDLike(CRUDBase):
         )
         likes = likes.scalars().all()
         return sum(likes)
+
+    async def exists_like(
+        self,
+        post_id: int,
+        user_id: int,
+        session: AsyncSession
+    ):
+        like = await session.scalars(
+            select(True).where(
+                select(Like).where(
+                    Like.post_id == post_id,
+                    and_(
+                        Like.user_id == user_id
+                    )
+                ).exists()
+            )
+        )
+        return like.first()
 
 
 like_crud = CRUDLike(Like)

@@ -11,4 +11,7 @@ class Like(Base):
     OUT = 'У id поста "{post_id}" лайков "{likes}"'
 
     def __repr__(self):
-        return self.OUT.format(self.post_id, self.likes)
+        return self.OUT.format(
+            post_id=self.post_id,
+            likes=self.likes
+        )
