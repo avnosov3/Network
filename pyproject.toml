@@ -10,6 +10,8 @@ packages = [{include = "webtronics_test_task"}]
 python = "^3.10"
 fastapi = "0.78.0"
 uvicorn = {version = "0.17.6", extras = ["standard"]}
+aiosqlite = "0.17.0"
+sqlalchemy = "1.4.36"
 
 
 [build-system]
