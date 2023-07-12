@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
 from app.crud.post import post_crud
-from app.schemas.post import PostCreate, PostUpdate
+from app.crud.like import like_crud
+from app.schemas.post import PostCreateSchema, PostUpdateSchema
 from ..validators import check_post_exists_by_id
 
 post_router = APIRouter()
@@ -13,7 +14,7 @@ POSTS_NOT_FOUND = 'Посты не найдены'
 
 @post_router.post('/')
 async def create_post(
-    post: PostCreate, session: AsyncSession = Depends(get_async_session)
+    post: PostCreateSchema, session: AsyncSession = Depends(get_async_session)
 ):
     return await post_crud.create(post, session)
 
@@ -37,10 +38,26 @@ async def get_post(
     return await check_post_exists_by_id(post_id, session)
 
 
+@post_router.get('/{post_id}/likes')
+async def get_likes_in_post(
+    post_id: int,
+    session: AsyncSession = Depends(get_async_session)
+):
+    return await like_crud.get_likes_in_post(post_id, session)
+
+
+@post_router.get('/{post_id}/count-likes')
+async def count_likes(
+    post_id: int,
+    session: AsyncSession = Depends(get_async_session)
+):
+    return await like_crud.count_likes_in_post(post_id, session)
+
+
 @post_router.patch('/{post_id}')
 async def update_post(
     post_id: int,
-    post: PostUpdate,
+    post: PostUpdateSchema,
     session: AsyncSession = Depends(get_async_session)
 ):
     post_db = await check_post_exists_by_id(post_id, session)

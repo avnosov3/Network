@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Extra
 
 
-class PostCreate(BaseModel):
+class PostCreateSchema(BaseModel):
     text: str
     pub_date: datetime
 
@@ -11,7 +11,7 @@ class PostCreate(BaseModel):
         min_anystr_length = 1
 
 
-class PostUpdate(BaseModel):
+class PostUpdateSchema(BaseModel):
     text: str
 
     class Config:
