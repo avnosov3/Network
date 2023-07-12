@@ -37,3 +37,12 @@ async def update_post(
 ):
     post_db = await check_post_exists_by_id(post_id, session)
     return await post_crud.update(post_db, post, session)
+
+
+@post_router.delete('/{post_id}')
+async def delete_post(
+    post_id: int,
+    session: AsyncSession = Depends(get_async_session)
+):
+    post_db = await check_post_exists_by_id(post_id, session)
+    return await post_crud.remove(post_db, session)
