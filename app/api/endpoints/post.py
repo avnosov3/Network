@@ -7,7 +7,7 @@ from app.crud.post import post_crud
 from app.crud.like import like_crud
 from app.models.user import User
 from app.schemas.post import PostCreateSchema, PostUpdateSchema
-from ..validators import check_post_exists_by_id
+from ..validators import check_obj_exists_by_id
 
 post_router = APIRouter()
 
@@ -30,13 +30,7 @@ async def create_post(
 
 @post_router.get('/')
 async def get_all_posts(session: AsyncSession = Depends(get_async_session)):
-    posts = await post_crud.get_all(session)
-    if posts is None:
-        raise HTTPException(
-            status_code=404,
-            detail=POSTS_NOT_FOUND
-        )
-    return posts
+    return await post_crud.get_all(session)
 
 
 @post_router.get('/{post_id}')
@@ -44,7 +38,7 @@ async def get_post(
     post_id: int,
     session: AsyncSession = Depends(get_async_session)
 ):
-    return await check_post_exists_by_id(post_id, session)
+    return await check_obj_exists_by_id(post_id, session, post_crud)
 
 
 @post_router.get(
@@ -79,7 +73,7 @@ async def update_post(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user)
 ):
-    post_db = await check_post_exists_by_id(post_id, session)
+    post_db = await check_obj_exists_by_id(post_id, session, post_crud)
     if post_db.user_id != user.id:
         raise HTTPException(403, detail=NOT_ALLOWED_TO_UPDATE)
     return await post_crud.update(post_db, post, session)
@@ -94,7 +88,7 @@ async def delete_post(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user)
 ):
-    post_db = await check_post_exists_by_id(post_id, session)
+    post_db = await check_obj_exists_by_id(post_id, session, post_crud)
     if post_db.user_id != user.id:
         raise HTTPException(403, detail=NOT_ALLOWED_TO_DELETE)
     return await post_crud.remove(post_db, session)

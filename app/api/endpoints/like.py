@@ -4,11 +4,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_async_session
 from app.core.user import current_user
 from app.crud.like import like_crud
+from app.crud.post import post_crud
 from app.models.user import User
 from app.schemas.like import LikeCreateSchema
 from ..validators import (
-    check_post_exists_by_id, check_rights_to_like, check_double_like,
-    check_like_exists_by_id
+    check_obj_exists_by_id, check_rights_to_like, check_double_like,
 )
 
 like_router = APIRouter()
@@ -26,7 +26,7 @@ async def create_like(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user)
 ):
-    await check_post_exists_by_id(like.post_id, session)
+    await check_obj_exists_by_id(like.post_id, session, post_crud)
     await check_rights_to_like(like.post_id, user.id, session)
     await check_double_like(like.post_id, user.id, session)
     return await like_crud.create(like, session, user)
@@ -41,7 +41,7 @@ async def remove_like(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user)
 ):
-    like = await check_like_exists_by_id(like_id, session)
+    like = await check_obj_exists_by_id(like_id, session, like_crud)
     if user.id != like.user_id:
         raise HTTPException(403, detail=NOT_ALLOWED_TO_DELETE)
     return await like_crud.remove(like, session)

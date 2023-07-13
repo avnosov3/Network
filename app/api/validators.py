@@ -6,21 +6,25 @@ from ..crud.like import like_crud
 
 LIKE_NOT_FOUND = 'Лайк не найден'
 POST_NOT_FOUND = 'Пост не найден'
+OBJECT_NOT_FOUND = 'Объект не найден'
 COULD_NOT_LIKE = 'Невозомжно поставить лайк своему посту'
 LIKE_EXISTS = 'Вы уже поставили лайк'
 
 
-async def check_post_exists_by_id(
+async def check_obj_exists_by_id(
     id: int,
-    session: AsyncSession
+    session: AsyncSession,
+    crud,
+    status_code=404,
+    detail=OBJECT_NOT_FOUND
 ):
-    post = await post_crud.get(id, session)
-    if post is None:
+    obj_db = await crud.get(id, session)
+    if obj_db is None:
         raise HTTPException(
-            status_code=404,
-            detail=POST_NOT_FOUND
+            status_code=status_code,
+            detail=detail
         )
-    return post
+    return obj_db
 
 
 async def check_rights_to_like(
@@ -47,16 +51,3 @@ async def check_double_like(
             status_code=400,
             detail=LIKE_EXISTS
         )
-
-
-async def check_like_exists_by_id(
-    id: int,
-    session: AsyncSession
-):
-    like = await like_crud.get(id, session)
-    if like is None:
-        raise HTTPException(
-            status_code=404,
-            detail=LIKE_NOT_FOUND
-        )
-    return like
