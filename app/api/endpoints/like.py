@@ -7,8 +7,9 @@ from app.crud.like import like_crud
 from app.crud.post import post_crud
 from app.models.user import User
 from app.schemas.like import LikeCreateSchema
+
 from ..validators import (
-    check_obj_exists_by_id, check_rights_to_like, check_double_like,
+    check_double_like, check_obj_exists_by_id, check_rights_to_like
 )
 
 like_router = APIRouter()

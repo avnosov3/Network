@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..crud.post import post_crud
 from ..crud.like import like_crud
+from ..crud.post import post_crud
 
 LIKE_NOT_FOUND = 'Лайк не найден'
 POST_NOT_FOUND = 'Пост не найден'

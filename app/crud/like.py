@@ -1,8 +1,8 @@
-from sqlalchemy import select, and_
+from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .crud_base import CRUDBase
 from ..models.like import Like
+from .crud_base import CRUDBase
 
 
 class CRUDLike(CRUDBase):

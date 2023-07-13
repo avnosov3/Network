@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from .endpoints.post import post_router
 from .endpoints.like import like_router
+from .endpoints.post import post_router
 from .endpoints.user import user_router
 
 main_router_v1 = APIRouter()

@@ -1,4 +1,4 @@
 # Добавим модели, чтобы автомиграции запустились
-from .post import Post # noqa
-from .like import Like # noqa
-from .user import User # noqa
+from .like import Like  # noqa
+from .post import Post  # noqa
+from .user import User  # noqa

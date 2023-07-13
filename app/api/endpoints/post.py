@@ -3,10 +3,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
 from app.core.user import current_user
-from app.crud.post import post_crud
 from app.crud.like import like_crud
+from app.crud.post import post_crud
 from app.models.user import User
 from app.schemas.post import PostCreateSchema, PostUpdateSchema
+
 from ..validators import check_obj_exists_by_id
 
 post_router = APIRouter()
