@@ -1,12 +1,35 @@
 # webtronics-test-task
 
-# запуск проекта
+# Запуск проекта
+
 Проект можно запустить через docker или скачать репозиторий с github
 
 # Docker
 
+Клонировать репозиторий и перейти в него в командной строке:
+
 ```
-docker run --name webtronics -it -p 8000:80 avnosov/webtronics:v1
+git clone git@github.com:avnosov3/webtronics-test-task.git
+cd webtronics-test-task/
+```
+
+Создать .env и заполнить
+
+```
+DATABASE_URL=sqlite+aiosqlite:///./megatronics_net.db
+SECRET=<Укажите секрет>
+```
+
+Запустить docker compose
+
+```
+docker compose up -d
+```
+
+Провести миграции
+
+```
+docker compose exec webtronics poetry run alembic upgrade head
 ```
 
 # GitHub
@@ -16,12 +39,12 @@ docker run --name webtronics -it -p 8000:80 avnosov/webtronics:v1
 
 ```
 git clone git@github.com:avnosov3/webtronics-test-task.git
+cd webtronics-test-task/
 ```
 
 Создать виртуальное окружение
 
 ```
-cd webtronics-test-task/
 poetry env use python
 ```
 

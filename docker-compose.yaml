@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+
+  webtronics:
+    image: avnosov/webtronics:v1
+    restart: always
+    ports:
+      - "8000:80"
+    env_file:
+      - ./.env
