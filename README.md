@@ -11,13 +11,26 @@ git clone git@github.com:avnosov3/webtronics-test-task.git
 Создать виртуальное окружение
 
 ```
-poetry env use
+cd webtronics-test-task/
+poetry env use python
 ```
 
 Установить зависимости
 
 ```
 poetry install
+```
+
+Создать .env и заполнить
+
+```
+DATABASE_URL=sqlite+aiosqlite:///./megatronics_net.db
+SECRET=<Укажите секрет>
+```
+
+Провести миграции
+```
+poetry run alembic upgrade head
 ```
 
 Запустить проект
