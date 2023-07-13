@@ -6,7 +6,7 @@
 
 # Docker
 
-Клонировать репозиторий и перейти в него в командной строке:
+Клонировать репозиторий и перейти в него в командной строке
 
 ```
 git clone git@github.com:avnosov3/webtronics-test-task.git
@@ -35,7 +35,7 @@ docker compose exec webtronics poetry run alembic upgrade head
 # GitHub
 
 
-Клонировать репозиторий и перейти в него в командной строке:
+Клонировать репозиторий и перейти в него в командной строке
 
 ```
 git clone git@github.com:avnosov3/webtronics-test-task.git
