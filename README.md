@@ -1,6 +1,16 @@
 # webtronics-test-task
 
 # запуск проекта
+Проект можно запустить через docker или скачать репозиторий с githab
+
+# Docker
+
+```
+docker run --name webtronics -it -p 8000:80 avnosov/webtronics:v1
+```
+
+# GitHub
+
 
 Клонировать репозиторий и перейти в него в командной строке:
 
@@ -18,7 +28,7 @@ poetry env use python
 Установить зависимости
 
 ```
-poetry install
+poetry install --no-root
 ```
 
 Создать .env и заполнить

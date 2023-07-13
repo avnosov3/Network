@@ -19,7 +19,9 @@ NOT_ALLOWED_TO_DELETE = 'Нельзя удалять чужие посты'
 
 @post_router.post(
     '/',
-    dependencies=[Depends(current_user)]
+    dependencies=[Depends(current_user)],
+    response_model=PostCreateSchema,
+    response_model_exclude_none=True,
 )
 async def create_post(
     post: PostCreateSchema,
@@ -29,12 +31,20 @@ async def create_post(
     return await post_crud.create(post, session, user)
 
 
-@post_router.get('/')
+@post_router.get(
+    '/',
+    response_model=list[PostCreateSchema],
+    response_model_exclude_none=True
+)
 async def get_all_posts(session: AsyncSession = Depends(get_async_session)):
     return await post_crud.get_all(session)
 
 
-@post_router.get('/{post_id}')
+@post_router.get(
+    '/{post_id}',
+    response_model=PostCreateSchema,
+    response_model_exclude_none=True
+)
 async def get_post(
     post_id: int,
     session: AsyncSession = Depends(get_async_session)
@@ -66,7 +76,9 @@ async def count_likes(
 
 @post_router.patch(
     '/{post_id}',
-    dependencies=[Depends(current_user)]
+    dependencies=[Depends(current_user)],
+    response_model=PostCreateSchema,
+    response_model_exclude_none=True
 )
 async def update_post(
     post_id: int,
@@ -83,6 +95,8 @@ async def update_post(
 @post_router.delete(
     '/{post_id}',
     dependencies=[Depends(current_user)],
+    response_model=PostCreateSchema,
+    response_model_exclude_none=True
 )
 async def delete_post(
     post_id: int,

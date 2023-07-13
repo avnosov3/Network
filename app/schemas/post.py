@@ -8,6 +8,7 @@ class PostCreateSchema(BaseModel):
     pub_date: datetime
 
     class Config:
+        orm_mode = True
         min_anystr_length = 1
 
 
